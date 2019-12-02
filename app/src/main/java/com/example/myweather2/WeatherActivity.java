@@ -37,37 +37,24 @@ import okhttp3.Response;
 
 public class WeatherActivity extends AppCompatActivity {
 
-    public DrawerLayout drawerLayout;
+    private ScrollView weatherLayout;        //滚动视图
+    private TextView titleCity;              //标题
+    private TextView titleUpdateTime;        //标题更新时间
+    private TextView degreeText;             //当日温度
+    private ImageView tubiao;                //天气图标
+    private TextView weatherInfoText;        //当日天气情况
 
-    public SwipeRefreshLayout swipeRefresh;
-
-    private ScrollView weatherLayout;
-
-    private Button navButton;
-
-    private TextView titleCity;
-
-    private TextView titleUpdateTime;
-
-    private TextView degreeText;
-
-    private TextView weatherInfoText;
-
-    private LinearLayout forecastLayout;
-
-    private TextView aqiText;
-
-    private TextView pm25Text;
-
-    private TextView comfortText;
-
-    private TextView carWashText;
-
-    private TextView sportText;
-
-    private ImageView bingPicImg;
-
-    private String mWeatherId;
+    private TextView aqiText;                //AQI指数
+    private TextView pm25Text;               //PM2.5指数
+    private TextView comfortText;            //舒适度
+    private TextView carWashText;            //洗车指数
+    private TextView sportText;              //运动指数
+    private LinearLayout forecastLayout;     //预报栏
+    private String mWeatherId;               //从Intent传入的天气id
+    private ImageView bingPicImg;            //bing
+    public SwipeRefreshLayout swipeRefresh;  //下拉刷新
+    public DrawerLayout drawerLayout;        //滑动菜单
+    private Button navButton;                //城市栏按钮
     private Timer mTimer;
     private TimerTask mTimerTask;
 
@@ -87,6 +74,7 @@ public class WeatherActivity extends AppCompatActivity {
         titleCity = (TextView) findViewById(R.id.title_city);
         titleUpdateTime = (TextView) findViewById(R.id.title_update_time);
         degreeText = (TextView) findViewById(R.id.degree_text);
+        tubiao = findViewById(R.id.tubiao);
         weatherInfoText = (TextView) findViewById(R.id.weather_info_text);
         forecastLayout = (LinearLayout) findViewById(R.id.forecast_layout);
         aqiText = (TextView) findViewById(R.id.aqi_text);
@@ -186,6 +174,23 @@ public class WeatherActivity extends AppCompatActivity {
         titleUpdateTime.setText(updateTime);
         degreeText.setText(degree);
         weatherInfoText.setText(weatherInfo);
+        if (weatherInfo.equals("晴")) {
+            tubiao.setImageResource(R.drawable.qing);
+        } else if (weatherInfo.equals("多云")) {
+            tubiao.setImageResource(R.drawable.duoyun);
+        } else if (weatherInfo.equals("阴")) {
+            tubiao.setImageResource(R.drawable.yin);
+        } else if (weatherInfo.equals("小雨")) {
+            tubiao.setImageResource(R.drawable.yvyv);
+        } else if (weatherInfo.equals("中雨")) {
+            tubiao.setImageResource(R.drawable.yvyv);
+        } else if (weatherInfo.equals("大雨")) {
+            tubiao.setImageResource(R.drawable.yvyv);
+        } else if (weatherInfo.equals("阵雨")) {
+            tubiao.setImageResource(R.drawable.yv);
+        } else if (weatherInfo.equals("雷阵雨")) {
+            tubiao.setImageResource(R.drawable.yv);
+        }
         forecastLayout.removeAllViews();
         for (Forecast forecast : weather.forecastList) {
             View view = LayoutInflater.from(this).inflate(R.layout.forecast_item, forecastLayout, false);
